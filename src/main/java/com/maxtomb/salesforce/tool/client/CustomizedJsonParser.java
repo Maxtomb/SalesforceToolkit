@@ -9,7 +9,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class CustomizedJsonParser {
-	public static Map<String,List<Map<Object,Object>>> getDataMap(String jsonDataString){
+	public Map<String,List<Map<Object,Object>>> getDataMap(String jsonDataString){
 		JSONObject jobj = JSONObject.fromObject(jsonDataString);
 		Object[] nameSet = jobj.keySet().toArray();
 		Map<String,List<Map<Object,Object>>> resultDataMap = new HashMap<String,List<Map<Object,Object>>>();

@@ -70,7 +70,7 @@ public class HttpClient {
 		return sb.toString();
 	}
 	
-	public static String getJsonData(String url) throws Exception{
+	public String getJsonData(String url) throws Exception{
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpGet getRequest = new HttpGet(url);
 		getRequest.addHeader("accept", "application/json");
