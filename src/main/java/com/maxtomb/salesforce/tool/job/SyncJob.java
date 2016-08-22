@@ -1,16 +1,12 @@
 package com.maxtomb.salesforce.tool.job;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-
 import com.maxtomb.salesforce.tool.client.CustomizedJsonParser;
 import com.maxtomb.salesforce.tool.client.EnterpriseClient;
 import com.maxtomb.salesforce.tool.client.HttpClient;
