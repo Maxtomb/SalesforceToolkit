@@ -111,10 +111,11 @@ public class EnterpriseClient {
 	 * @param sObjectName 指定sobject 名字
 	 * @throws Exception
 	 */
-	public  void deleteSObject(String soql,String sObjectName) throws Exception{
+	public String deleteSObject(String soql,String sObjectName) throws Exception{
 		String classNamePrefix = "com.sforce.soap.enterprise.sobject.";
 		String classFullName = classNamePrefix + sObjectName;
 		Class<?> sobj = Class.forName(classFullName);
+		String result = "";
 		try {
 			QueryResult queryResults = connection.query(soql);
 			String[] ids = new String[queryResults.getSize()];
@@ -128,16 +129,19 @@ public class EnterpriseClient {
 			for (int i = 0; i < deleteResults.length; i++) {
 				if (deleteResults[i].isSuccess()) {
 					System.out.println(i + ". Successfully deleted record - Id: " + deleteResults[i].getId());
+					result = i + ". Successfully deleted record - Id: " + deleteResults[i].getId();
 				} else {
 					Error[] errors = deleteResults[i].getErrors();
 					for (int j = 0; j < errors.length; j++) {
 						System.out.println("ERROR deleting record: " + errors[j].getMessage());
+						result = "ERROR deleting record: " + errors[j].getMessage();
 					}
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return result;
 	}
 	
 }

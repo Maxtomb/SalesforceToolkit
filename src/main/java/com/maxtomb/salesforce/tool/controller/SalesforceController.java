@@ -102,29 +102,21 @@ public class SalesforceController {
     	return QuartzManager.listAllJob();
     }
     
-    @RequestMapping(value="/tool/sync/metadata",method=RequestMethod.POST)
-    public Map<String, List<Map<Object, Object>>> deleteSObject(
+    @RequestMapping(value="/tool/sync/sobject/records",method=RequestMethod.POST)
+    public String deleteSObject(
     		@RequestParam(value="account") String account,
     		@RequestParam(value="password") String password,
     		@RequestParam(value="token") String token,
-    		@RequestParam(value="jsonurl") String jsonurl
+    		@RequestParam(value="sobjectname") String sobjectname
     		) throws Exception{
     	
-    	String jsonDataString = new HttpClient().getJsonData(jsonurl);
-    	CustomizedJsonParser parser = new CustomizedJsonParser();
-    	Map<String, List<Map<Object, Object>>> resultDataMap = parser.getDataMap(jsonDataString);
+    	String soql = "SELECT id,name from "+sobjectname;
     	ConnectorConfig config = new ConnectorConfig();
 		config.setUsername(account);
 		config.setPassword(password+token);
 		EnterpriseConnection connection = Connector.newConnection(config);
 		EnterpriseClient client = new EnterpriseClient(connection);
-		Iterator iter = resultDataMap.entrySet().iterator();
-		while(iter.hasNext()){
-			Map.Entry<String, List<Map<Object,Object>>> entry = (Entry<String, List<Map<Object, Object>>>) iter.next();
-			client.createSObject(entry.getKey().toString(),entry.getValue());
-//			client.deleteSObject(soql, );
-		}
-    	return resultDataMap;
+		return client.deleteSObject(soql, sobjectname);
     }
     
     public static void main(String[] args) {
